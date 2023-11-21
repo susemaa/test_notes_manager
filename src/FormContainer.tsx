@@ -1,29 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { EditableTextInput } from '@susemaa/test_component_library';
+import { EditorState, convertToRaw } from 'draft-js';
 import { useDispatch } from 'react-redux';
 import { actions } from './slices/index';
 
+const emptyDraftJs = JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent()));
+
 const Form: React.FC = () => {
   const dispatch = useDispatch();
+  const [editorKey, setEditorKey] = useState(0);
   interface FormValues {
     body: string;
     title: string;
   }
   const formik = useFormik<FormValues>({
     initialValues: {
-      body: '',
+      body: emptyDraftJs,
       title: '',
     },
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       const { body, title } = values;
       dispatch(actions.add({ body, title, date: new Date()}));
+      resetForm();
+      setEditorKey(editorKey + 1);
     }
   });
   return (
     <div className="bg-white rounded">
     <form onSubmit={formik.handleSubmit} className="max-w-lg mx-auto mt-10">
       <EditableTextInput
+        key={editorKey}
         value={formik.values.body}
         onChange={(value) => formik.setFieldValue('body', value)}
         label="Управлять заметками еще проще!"
@@ -45,6 +52,6 @@ const Form: React.FC = () => {
     </form>
     </div>
   );
-}
+};
 
 export default Form;

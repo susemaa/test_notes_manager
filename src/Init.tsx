@@ -5,7 +5,16 @@ import reducer from './slices/index';
 import App from './App';
 
 const Init: React.FC = () => {
-  const store = configureStore({reducer});
+  const store = configureStore({
+    reducer,
+    middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['note/add'],
+        ignoredPaths: ['notes.note'],
+      },
+    }),
+  });
   return (
   <Provider store={store}>
     <App />

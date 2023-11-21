@@ -18,13 +18,12 @@ const initialState: NotesState = {
 };
 
 export const noteSlice = createSlice({
-  name: 'counter',
+  name: 'note',
   initialState,
   reducers: {
     add: (state, action: PayloadAction<NoteProps>) => {
-      const noteWithId = { note: action.payload, id: idGenerator() };
+      const noteWithId: NotesWithId = { note: action.payload, id: idGenerator() };
       state.notes.push(noteWithId);
-      console.log(state);
     },
     remove: (state, action: PayloadAction<number>) => {
       const idToRemove = action.payload;

@@ -2,12 +2,13 @@ import React from 'react';
 import { Note } from '@susemaa/test_component_library';
 import Masonry from 'react-responsive-masonry';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from './slices/index';
+import { RootState, actions } from './slices/index';
 import FormContainer from './FormContainer';
 
 function App() {
   const { notes } = useSelector((s: RootState) => s.note);
-  console.log(notes);
+  const dispatch = useDispatch();
+  const onRemove = (id: number) => () => dispatch(actions.remove(id));
   return (
     <div className="overflow-y-auto">
       <div className="justify-center w-screen">
@@ -18,7 +19,7 @@ function App() {
           {notes.map(({ note, id}) => {
             const { body, title, date } = note;
             return (
-              <Note body={body} title={title} date={date} key={id}/>
+              <Note body={body} title={title} date={date} key={id} onRemove={onRemove(id)}/>
             );
           })}
         </Masonry>
