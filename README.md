@@ -1,3 +1,6 @@
+## Install
+### `npm ci`
+
 ## Start
 ### `npm run start`
 
