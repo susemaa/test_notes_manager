@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import { EditableTextInput } from '@susemaa/test_component_library';
-import { EditorState, convertToRaw } from 'draft-js';
+import { EditableTextInput, emptyTextInputValue } from '@susemaa/test_component_library';
 import { useDispatch } from 'react-redux';
 import { actions } from './slices/index';
-
-const emptyDraftJs = JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent()));
 
 const Form: React.FC = () => {
   const dispatch = useDispatch();
@@ -16,7 +13,7 @@ const Form: React.FC = () => {
   }
   const formik = useFormik<FormValues>({
     initialValues: {
-      body: emptyDraftJs,
+      body: emptyTextInputValue,
       title: '',
     },
     onSubmit: (values, { resetForm }) => {
