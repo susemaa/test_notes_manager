@@ -1,3 +1,7 @@
+# Description
+
+Notes manager based on [@susemaa/test_component_library](https://github.com/susemaa/test_component_library)
+
 # Getting Started
 
 ## Install
